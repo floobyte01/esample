@@ -4,7 +4,7 @@ import { verifyToken } from "./lib/auth";
 
 export async function middleware(request: NextRequest) {
   const authToken = request.cookies.get("adminToken")?.value;
-  const { error } = await verifyToken(
+  const { payload, error } = await verifyToken(
     authToken!,
     process.env.ACCESS_SECRET_KEY!
   );
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
       );
     }
     if (request.nextUrl.pathname.startsWith("/admin")) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
   if (request.nextUrl.pathname.startsWith("/login") && !error) {

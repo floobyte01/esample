@@ -2,8 +2,8 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -11,12 +11,13 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [errorMssg, setErrorMssg] = useState("");
+  const [errorMssg, setErrorMssg] = useState<string | null>(null);
   const router = useRouter();
+
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMssg("");
+    setErrorMssg(null);
     try {
       const req = await fetch("/api/login", {
         method: "POST",
@@ -26,9 +27,15 @@ const Login = () => {
         body: JSON.stringify(data),
       });
       const res = await req.json();
-      !req.ok && setErrorMssg(res.message);
-      res.success && router.push("/admin");
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      if (!req.ok) {
+        throw new Error("Something went wrong");
+      }
+      router.push("/admin/skills");
     } catch (error) {
+      setErrorMssg((error as Error).message);
     } finally {
       setData({
         email: "",
@@ -67,7 +74,9 @@ const Login = () => {
           onChange={dataHandler}
           required
         />
-        <Button disabled={loading} className="w-full">{loading ? "Please wait!" : "Login"}</Button>
+        <Button disabled={loading} className="w-full">
+          {loading ? "Please wait!" : "Login"}
+        </Button>
         <p className="text-red-500">{errorMssg}</p>
       </form>
     </div>

@@ -2,15 +2,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import img from "../../../public/Logo.png";
-import Socials from "./Socials";
+import dynamic from "next/dynamic";
+const Socials = dynamic(() => import("./Socials"));
 import { RiMenu4Fill } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import { GrHomeRounded } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
-import { GoProjectSymlink } from "react-icons/go";
 import { GrLocation } from "react-icons/gr";
 import { PiPenNibStraight } from "react-icons/pi";
+import { Layers } from "lucide-react";
 
 const Navbar = () => {
   const pre = "-top-96 right-0";
@@ -26,8 +27,8 @@ const Navbar = () => {
     <div className="fixed w-full h-14 z-50 top-0 left-0">
       <nav className="backdrop-blur-md w-full flex items-center justify-between px-4 md:px-0 md:justify-around h-full">
         <div className="flex gap-2 cursor-default font-bold text-white items-center">
-          <Image src={img} alt="Logo" className="w-7 h-5" priority />
-          <span>floobyte</span>
+          <Image src={img} alt="Logo" className="w-4 h-5" priority />
+          <span>Lakshay Babbar</span>
         </div>
         <div>
           <ul
@@ -42,7 +43,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className={linkStyle} onClick={menuHandler}>
-              <Link href="about">
+              <Link href="/about">
                 <span className={linkSpan}>
                   <FaRegUser />
                   About
@@ -50,15 +51,15 @@ const Navbar = () => {
               </Link>
             </li>
             <li className={linkStyle} onClick={menuHandler}>
-              <Link href="projects">
+              <Link href="/projects">
                 <span className={linkSpan}>
-                  <GoProjectSymlink />
+                  <Layers className="size-5" />
                   Projects
                 </span>
               </Link>
             </li>
             <li className={linkStyle} onClick={menuHandler}>
-              <Link href="contact">
+              <Link href="/contact">
                 <span className={linkSpan}>
                   <GrLocation />
                   Contact
@@ -66,10 +67,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className={linkStyle}>
-              <Link
-                href="https://blog-tech-delta.vercel.app/users/lakshaybabbar0118"
-                target="_blank"
-              >
+              <Link href="https://legit-blogs.vercel.app" target="_blank">
                 <span className={linkSpan}>
                   <PiPenNibStraight />
                   Blog

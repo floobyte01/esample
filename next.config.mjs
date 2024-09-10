@@ -5,10 +5,9 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/drngufzyf/image/upload/**", // Update this to match the correct account path
+        pathname: "/dfl8r2ylz/image/upload/**",
       },
     ],
   },
 };
-
 export default nextConfig;
